@@ -1,4 +1,4 @@
-import baseRouter from './modules/base'
-import mainRouter from './modules/main'
+import RouterBase from './modules/base'
+import RouterMain from './modules/main'
 
-export { baseRouter, mainRouter }
+export { RouterBase, RouterMain }

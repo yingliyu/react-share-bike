@@ -18,16 +18,19 @@
     box-sizing: border-box;
     .breadcrumb-title {
       text-align: center;
-      &:after {
-        display: block;
-        content: '';
-        width: 0px;
-        height: 0px;
-        border: 10px solid transparent;
-        border-top: 10px solid #fff;
-        position: absolute;
-        left: 90px;
-        top: 36px;
+      span {
+        position: relative;
+        &:after {
+          display: block;
+          content: '';
+          width: 0px;
+          height: 0px;
+          border: 10px solid transparent;
+          border-top: 10px solid #fff;
+          position: absolute;
+          left: 3px;
+          top: 25px;
+        }
       }
     }
     .weather {

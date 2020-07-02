@@ -1,116 +1,199 @@
-const menuList = [
+import React from 'react'
+import loadable from '@loadable/component'
+const Dashbord = loadable(() => import('@/pages/dashboard'), { fallback: <div>加载中...</div> })
+const UIAsyncPage = loadable((props) => import(`@/pages/ui/${props.page}/index.jsx`), {
+  fallback: <div>加载中...</div>
+})
+
+const routerMain = [
   {
-    title: '首页',
-    key: '/admin/home'
+    name: '首页',
+    path: '/admin/dashboard',
+    component: Dashbord,
+    icon: '',
+    exact: true
   },
   {
-    title: 'UI',
-    key: '/admin/ui',
+    name: 'UI',
+    path: '/admin/ui',
+    icon: '',
     children: [
       {
-        title: '按钮',
-        key: '/admin/ui/buttons'
+        name: '按钮',
+        path: '/admin/ui/buttons',
+        component: () => <UIAsyncPage page="button" />,
+        icon: '',
+        exact: true
       },
       {
-        title: '弹框',
-        key: '/admin/ui/modals'
+        name: '弹框',
+        path: '/admin/ui/modals',
+        component: () => <UIAsyncPage page="modal" />,
+        icon: '',
+        exact: true
       },
       {
-        title: 'Loading',
-        key: '/admin/ui/modals'
+        name: 'Loading',
+        path: '/admin/ui/loading',
+        component: () => <UIAsyncPage page="loading" />,
+        icon: '',
+        exact: true
       },
       {
-        title: '通知提醒',
-        key: '/admin/ui/notification'
+        name: '通知提醒',
+        path: '/admin/ui/notification',
+        component: () => <UIAsyncPage page="notification" />,
+        icon: '',
+        exact: true
       },
       {
-        title: '全局Message',
-        key: '/admin/ui/message'
+        name: '全局Message',
+        path: '/admin/ui/message',
+        component: () => <UIAsyncPage page="message" />,
+        icon: '',
+        exact: true
       },
       {
-        title: 'Tab页签',
-        key: '/admin/ui/tabs'
+        name: 'Tab页签',
+        path: '/admin/ui/tab',
+        component: () => <UIAsyncPage page="tab" />,
+        icon: '',
+        exact: true
       },
       {
-        title: '图片画廊',
-        key: '/admin/ui/gallery'
+        name: '图片画廊',
+        path: '/admin/ui/gallery',
+        component: () => <UIAsyncPage page="gallery" />,
+        icon: '',
+        exact: true
       },
       {
-        title: '轮播图',
-        key: '/admin/ui/callor'
+        name: '轮播图',
+        path: '/admin/ui/carousel',
+        component: () => <UIAsyncPage page="carousel" />,
+        icon: '',
+        exact: true
       }
     ]
   },
   {
-    title: '表单',
-    key: '/admin/form',
+    name: '表单',
+    path: '/admin/form',
+    component: null,
+    icon: '',
+    exact: true,
     children: [
       {
-        title: '登录',
-        key: '/admin/form/login'
+        name: '登录',
+        path: '/admin/form/login',
+        component: null,
+        icon: '',
+        exact: true
       },
       {
-        title: '注册',
-        key: '/admin/form/reg'
+        name: '注册',
+        path: '/admin/form/reg',
+        component: null,
+        icon: '',
+        exact: true
       }
     ]
   },
   {
-    title: '表格',
-    key: '/admin/table',
+    name: '表格',
+    path: '/admin/table',
+    component: null,
+    icon: '',
+    exact: true,
     children: [
       {
-        title: '基础表格',
-        key: '/admin/table/base'
+        name: '基础表格',
+        path: '/admin/table/base',
+        component: null,
+        icon: '',
+        exact: true
       },
       {
-        title: '高级表格',
-        key: '/admin/table/advance'
+        name: '高级表格',
+        path: '/admin/table/advance',
+        component: null,
+        icon: '',
+        exact: true
       }
     ]
   },
   {
-    title: '富文本',
-    key: '/admin/textarea'
+    name: '富文本',
+    path: '/admin/textarea',
+    component: null,
+    icon: '',
+    exact: true
   },
   {
-    title: '城市管理',
-    key: '/admin/city'
+    name: '城市管理',
+    path: '/admin/city',
+    component: null,
+    icon: '',
+    exact: true
   },
   {
-    title: '订单管理',
-    key: '/admin/order'
+    name: '订单管理',
+    path: '/admin/order',
+    component: null,
+    icon: '',
+    exact: true
   },
   {
-    title: '员工管理',
-    key: '/admin/user'
+    name: '员工管理',
+    path: '/admin/user',
+    component: null,
+    icon: '',
+    exact: true
   },
   {
-    title: '车辆地图',
-    key: '/admin/bikeMap'
+    name: '车辆地图',
+    path: '/admin/bikeMap',
+    component: null,
+    icon: '',
+    exact: true
   },
   {
-    title: '图表',
-    key: '/admin/charts',
+    name: '图表',
+    path: '/admin/charts',
+    component: null,
+    icon: '',
+    exact: true,
     children: [
       {
-        title: '柱形图',
-        key: '/admin/charts/bar'
+        name: '柱形图',
+        path: '/admin/charts/bar',
+        component: null,
+        icon: '',
+        exact: true
       },
       {
-        title: '饼图',
-        key: '/admin/charts/pie'
+        name: '饼图',
+        path: '/admin/charts/pie',
+        component: null,
+        icon: '',
+        exact: true
       },
       {
-        title: '折线图',
-        key: '/admin/charts/line'
+        name: '折线图',
+        path: '/admin/charts/line',
+        component: null,
+        icon: '',
+        exact: true
       }
     ]
   },
   {
-    title: '权限设置',
-    key: '/admin/permission'
+    name: '权限设置',
+    path: '/admin/permission',
+    component: null,
+    icon: '',
+    exact: true
   }
 ]
 
-export default menuList
+export default routerMain

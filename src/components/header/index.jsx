@@ -33,7 +33,7 @@ export default function Header() {
       </Row>
       <Row className="breadcrumb">
         <Col span={4} className="breadcrumb-title">
-          首页
+          <span>首页</span>
         </Col>
         <Col span={20} className="weather">
           <span className="date">{time}</span>
