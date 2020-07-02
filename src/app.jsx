@@ -1,27 +1,19 @@
 import React from 'react'
-import { Row, Col } from 'antd'
-import Header from './components/header'
-import Footer from './components/footer'
-import NavLeft from './components/nav-left'
-import './app.less'
-
-export default class App extends React.Component {
-
-  render() {
-    return (
-      <Row className='admin-wrapper'>
-        <Col span={3} className='nav-left'>
-          <NavLeft />
-        </Col>
-        <Col span={21} className='main'>
-          <Header />
-          <Row className='content'>
-              content
-            {/* {this.props.childern} */}
-          </Row>
-          <Footer />
-        </Col>
-      </Row>
-    )
-  }
+import { BaseLayout, MainLayout } from '@/layouts'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+export default function App() {
+  return (
+    <Router>
+      <div className="app-wrapper">
+        <Switch>
+          <Route path="/">
+            <MainLayout />
+          </Route>
+          <Route path="/base">
+            <BaseLayout />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
+  )
 }
