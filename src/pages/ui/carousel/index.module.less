@@ -1,0 +1,33 @@
+.ui-caousel-wrapper {
+  width: 100%;
+
+  .base-carousel-wrapper {
+    :global .ant-carousel .slick-slide {
+      text-align: center;
+      height: 160px;
+      line-height: 160px;
+
+      background: #3ba0e9;
+      overflow: hidden;
+    }
+  }
+
+  h3 {
+    color: #fff;
+  }
+  .img-carousel-wrapper {
+    :global .ant-carousel {
+      width: 500px;
+      height: 320px;
+    }
+    :global .ant-carousel .slick-slide {
+      width: 500px;
+      height: 320px;
+      overflow: hidden;
+      background: #7dbcea;
+    }
+    img {
+      width: 100%;
+    }
+  }
+}

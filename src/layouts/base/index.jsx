@@ -1,7 +1,7 @@
 import React from 'react'
 
-import './index.less'
+import styles from './index.module.less'
 
 export default function Base(props) {
-  return <div>{props.children}</div>
+  return <div className={styles['base-wrapper']}>{props.children}</div>
 }

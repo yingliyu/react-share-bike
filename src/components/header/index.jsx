@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Row, Col } from 'antd'
-import './index.less'
+import styles from './index.module.less'
 import axios from '@/utils/http'
 
 export default function Header() {
@@ -24,20 +24,20 @@ export default function Header() {
     })
   }
   return (
-    <div className="header">
-      <Row className="header-top">
+    <div className={styles.header}>
+      <Row className={styles['header-top']}>
         <Col span={24}>
           <span>欢迎, 七月笙烟</span>
           <a>退出</a>
         </Col>
       </Row>
-      <Row className="breadcrumb">
-        <Col span={4} className="breadcrumb-title">
+      <Row className={styles['breadcrumb']}>
+        <Col span={4} className={styles['breadcrumb-title']}>
           <span>首页</span>
         </Col>
-        <Col span={20} className="weather">
-          <span className="date">{time}</span>
-          <span className="weather-detail">{weather}</span>
+        <Col span={20} className={styles['weather']}>
+          <span className={styles['date']}>{time}</span>
+          <span className={styles['weather-detail']}>{weather}</span>
         </Col>
       </Row>
     </div>

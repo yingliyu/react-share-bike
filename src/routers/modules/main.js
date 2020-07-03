@@ -56,7 +56,7 @@ const routerMain = [
       {
         name: 'Tab页签',
         path: '/admin/ui/tab',
-        component: () => <UIAsyncPage page="tab" />,
+        component: () => <UIAsyncPage page="tabs" />,
         icon: '',
         exact: true
       },

@@ -4,7 +4,7 @@ import { RouterMain } from '@/routers'
 import logo from './imgs/logo.png'
 import { Menu } from 'antd'
 const { SubMenu } = Menu
-import './index.less'
+import styles from './index.module.less'
 
 export default function NavLeft(props) {
   // 菜单渲染-递归
@@ -27,11 +27,11 @@ export default function NavLeft(props) {
     })
   }
   return (
-    <div className="nav-left">
-      <div className="logo">
+    <div className={styles['nav-left']}>
+      <div className={styles['logo']}>
         <img src={logo} />
       </div>
-      <Menu onClick={handleClick} theme="dark" className="menu-wrapper">
+      <Menu onClick={handleClick} theme="dark" className={styles['menu-wrapper']}>
         {menuTreeNode ? menuTreeNode : null}
       </Menu>
     </div>
