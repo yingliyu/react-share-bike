@@ -16,6 +16,7 @@ export default function App() {
                   {RouterMain.map((router, index) =>
                     !router.children ? (
                       <Route
+                        {...routeProps}
                         key={index}
                         path={router.path}
                         component={router.component}
@@ -24,6 +25,7 @@ export default function App() {
                     ) : (
                       router.children.map((item) => (
                         <Route
+                          {...routeProps}
                           key={index}
                           path={item.path}
                           component={item.component}

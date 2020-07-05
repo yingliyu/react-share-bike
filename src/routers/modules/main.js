@@ -4,7 +4,12 @@ const Dashbord = loadable(() => import('@/pages/dashboard'), { fallback: <div>�
 const UIAsyncPage = loadable((props) => import(`@/pages/ui/${props.page}/index.jsx`), {
   fallback: <div>加载中...</div>
 })
-
+const Login = loadable((props) => import(`@/pages/login/index.jsx`), {
+  fallback: <div>加载中...</div>
+})
+const Register = loadable((props) => import(`@/pages/reg/index.jsx`), {
+  fallback: <div>加载中...</div>
+})
 const routerMain = [
   {
     name: '首页',
@@ -79,21 +84,19 @@ const routerMain = [
   {
     name: '表单',
     path: '/admin/form',
-    component: null,
     icon: '',
-    exact: true,
     children: [
       {
         name: '登录',
         path: '/admin/form/login',
-        component: null,
+        component: Login,
         icon: '',
         exact: true
       },
       {
         name: '注册',
         path: '/admin/form/reg',
-        component: null,
+        component: Register,
         icon: '',
         exact: true
       }
