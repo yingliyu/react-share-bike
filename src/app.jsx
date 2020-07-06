@@ -2,11 +2,12 @@ import React from 'react'
 import { BaseLayout, MainLayout } from '@/layouts'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import { RouterMain, RouterBase } from '@/routers'
-
+import Loading from '@/components/loading/index.jsx'
+import styles from './app.module.less'
 export default function App() {
   return (
-    <Router>
-      <div className="app-wrapper">
+    <div className={styles['app-wrapper']}>
+      <Router>
         <Switch>
           <Route
             path="/admin"
@@ -71,7 +72,11 @@ export default function App() {
             )}
           />
         </Switch>
+      </Router>
+
+      <div id="loadingWrapper" className={styles['loading-wrapper']}>
+        <Loading />
       </div>
-    </Router>
+    </div>
   )
 }

@@ -1,20 +1,20 @@
 import axios from 'axios'
 import config from '@/config'
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
 // create axios instance
 const instance = axios.create({
-  baseURL: config.appConfig.baseUrl,
+  baseURL: config.baseUrl,
   timeout: 1000 * 60 * 10 // 10 min
 })
-// const Loading = document.querySelector('#loadingWrapper')
+const Loading = document.querySelector('#loadingWrapper')
 
-// const showLoading = () => {
-//   Loading.style.display = ''
-// }
+const showLoading = () => {
+  Loading.style.display = 'block'
+}
 
-// const closeLoading = () => {
-//   Loading.style.display = 'none'
-// }
+const closeLoading = () => {
+  Loading.style.display = 'none'
+}
 
 let reqList = []
 
@@ -27,7 +27,7 @@ instance.interceptors.request.use(
     if (!reqList.includes(request)) {
       reqList.push(request)
     }
-    // showLoading()
+    showLoading()
 
     // Do something before request is sent
     // Loading 为单例模式
@@ -36,8 +36,8 @@ instance.interceptors.request.use(
     //   background: 'rgba(0, 0, 0, 0.7)',
     //   customClass: 'loading-custom-class'
     // })
-    const token = Cookies.get('token')
-    config.headers['authorization'] = token ? token : ''
+    // const token = Cookies.get('token')
+    // config.headers['authorization'] = token ? token : ''
     // config.withCredentials = true
     return config
   },
@@ -48,7 +48,7 @@ instance.interceptors.request.use(
     //   duration: 2000
     // })
     // Loading.service().close()
-    // closeLoading()
+    closeLoading()
     return Promise.reject(error)
   }
 )
@@ -64,7 +64,7 @@ instance.interceptors.response.use(
     // 如果当前已经没有进行中的异步请求了，则关闭loading
     if (reqList.length === 0) {
       // Loading.service().close()
-      // showLoading()
+      closeLoading()
     }
 
     // 当响应结果不成功，则报错
@@ -86,7 +86,7 @@ instance.interceptors.response.use(
     reqList.length = 0
     // 关闭loading
     // Loading.service().close()
-    // closeLoading()
+    closeLoading()
 
     // 如果是取消请求的话，则抛出取消请求
     if (axios.isCancel(error)) {

@@ -6,7 +6,7 @@ export function AppPost(url, data) {
     instance
       .post(url, data)
       .then((res) => {
-        if (res.data.code === '200') {
+        if (res.data.code === 200) {
           resolve(res.data.data)
         } else {
           reject(res.data.msg)
@@ -31,7 +31,7 @@ export function AppGet(url, data) {
         }
       })
       .then((res) => {
-        if (res.data.code === '200' || res.data.code === 200) {
+        if (res.data.code === 200) {
           resolve(res.data.data)
         } else {
           reject(res.data.msg)

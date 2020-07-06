@@ -10,6 +10,14 @@ const Login = loadable((props) => import(`@/pages/login/index.jsx`), {
 const Register = loadable((props) => import(`@/pages/reg/index.jsx`), {
   fallback: <div>加载中...</div>
 })
+// 基础表格
+const BaseTable = loadable((props) => import(`@/pages/tables/base-tab/index.jsx`), {
+  fallback: <div>加载中...</div>
+})
+// 高级表格
+const AdvanceTable = loadable((props) => import(`@/pages/tables/advance-tab/index.jsx`), {
+  fallback: <div>加载中...</div>
+})
 const routerMain = [
   {
     name: '首页',
@@ -105,21 +113,19 @@ const routerMain = [
   {
     name: '表格',
     path: '/admin/table',
-    component: null,
     icon: '',
-    exact: true,
     children: [
       {
         name: '基础表格',
         path: '/admin/table/base',
-        component: null,
+        component: BaseTable,
         icon: '',
         exact: true
       },
       {
         name: '高级表格',
         path: '/admin/table/advance',
-        component: null,
+        component: AdvanceTable,
         icon: '',
         exact: true
       }
