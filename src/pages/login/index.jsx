@@ -16,7 +16,7 @@ export default (props) => {
   const onFinish = (values) => {
     if (values.username === 'admin' && values.password === '123456') {
       message.success(`${values.username}恭喜你，登录成功！！！`)
-      setTimeout(() => props.history.push('/admin/dashboard'), 3000)
+      setTimeout(() => props.history.push('/admin/dashboard'), 1000)
     }
   }
 

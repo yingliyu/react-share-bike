@@ -4,18 +4,25 @@ const Dashbord = loadable(() => import('@/pages/dashboard'), { fallback: <div>�
 const UIAsyncPage = loadable((props) => import(`@/pages/ui/${props.page}/index.jsx`), {
   fallback: <div>加载中...</div>
 })
-const Login = loadable((props) => import(`@/pages/login/index.jsx`), {
+const Login = loadable((props) => import(`@/pages/login`), {
   fallback: <div>加载中...</div>
 })
-const Register = loadable((props) => import(`@/pages/reg/index.jsx`), {
+const Register = loadable((props) => import(`@/pages/reg`), {
   fallback: <div>加载中...</div>
 })
 // 基础表格
-const BaseTable = loadable((props) => import(`@/pages/tables/base-tab/index.jsx`), {
+const BaseTable = loadable((props) => import(`@/pages/tables/base-tab`), {
   fallback: <div>加载中...</div>
 })
 // 高级表格
-const AdvanceTable = loadable((props) => import(`@/pages/tables/advance-tab/index.jsx`), {
+const AdvanceTable = loadable((props) => import(`@/pages/tables/advance-tab`), {
+  fallback: <div>加载中...</div>
+})
+
+const CityManage = loadable((props) => import(`@/pages/city`), {
+  fallback: <div>加载中...</div>
+})
+const OrderManage = loadable((props) => import(`@/pages/order`), {
   fallback: <div>加载中...</div>
 })
 const routerMain = [
@@ -141,14 +148,14 @@ const routerMain = [
   {
     name: '城市管理',
     path: '/admin/city',
-    component: null,
+    component: CityManage,
     icon: '',
     exact: true
   },
   {
     name: '订单管理',
     path: '/admin/order',
-    component: null,
+    component: OrderManage,
     icon: '',
     exact: true
   },

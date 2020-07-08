@@ -26,9 +26,13 @@ export default function NavLeft(props) {
       pathname: e.key
     })
   }
+  const toDashboard = () => {
+    props.history.push('/admin/dashboard')
+  }
+
   return (
     <div className={styles['nav-left']}>
-      <div className={styles['logo']}>
+      <div className={styles['logo']} onClick={toDashboard}>
         <img src={logo} />
       </div>
       <Menu onClick={handleClick} theme="dark" className={styles['menu-wrapper']}>

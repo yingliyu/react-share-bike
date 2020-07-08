@@ -2,7 +2,7 @@ import React from 'react'
 import { Row, Col } from 'antd'
 import styles from './index.module.less'
 import loadable from '@loadable/component'
-const AsyncPage = loadable((props) => import(`@/components/${props.page}/index.jsx`))
+const AsyncPage = loadable((props) => import(`@/components/${props.page}`))
 export default function App(props) {
   return (
     <Row className={styles['admin-wrapper']}>

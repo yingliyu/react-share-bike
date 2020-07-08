@@ -23,7 +23,8 @@ export default (props) => {
   // console.log(moment().get('year')) // 年
   const { Option } = Select
   const { TextArea } = Input
-  const RadioGroup = Radio.Group
+  // const RadioGroup = Radio.Group
+
   const layout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 18 }
@@ -34,10 +35,14 @@ export default (props) => {
       span: 18
     }
   }
+  const [time, setTime] = useState('00:00:00')
+  const [imageUrl, setImgUrl] = useState('')
+  const [sex, setSex] = useState(1)
+  const [loading, setLoading] = useState(false)
+
   const onChangeDate = (date, dateString) => {
     console.log(date, dateString)
   }
-  const [time, setTime] = useState('00:00:00')
 
   const onChangeTimer = (time, timeString) => {
     console.log(time, timeString)
@@ -60,9 +65,8 @@ export default (props) => {
     }
     return isJpgOrPng && isLt2M
   }
-  const [imageUrl, setImgUrl] = useState()
-  const [loading, setLoading] = useState(false)
-  const handleChange = (info) => {
+
+  const handleChangeUpload = (info) => {
     if (info.file.status === 'uploading') {
       setLoading(true)
       return
@@ -81,8 +85,12 @@ export default (props) => {
       <div className="ant-upload-text">Upload</div>
     </div>
   )
-  const onFinish = (values) => {
-    console.log('Success:', values)
+  const onFinish = (fileList) => {
+    console.log('Success:', fileList)
+  }
+  const onRadioChange = (e) => {
+    setSex(e.target.value)
+    // console.log(e)
   }
   return (
     <div className={styles['reg-wrapper']}>
@@ -96,6 +104,7 @@ export default (props) => {
             time: moment(time, 'HH:mm:ss')
           }}
           onFinish={onFinish}
+          style={{ width: '80%' }}
         >
           <Form.Item
             label="用户名"
@@ -122,11 +131,12 @@ export default (props) => {
             <Input type="password" placeholder="请输入密码" />
           </Form.Item>
           <Form.Item label="性别" name="sex">
-            <RadioGroup>
-              <Radio value="male">男</Radio>
-              <Radio value="female">女</Radio>
-            </RadioGroup>
+            <Radio.Group onChange={onRadioChange} value={sex}>
+              <Radio value="0">男</Radio>
+              <Radio value="1">女</Radio>
+            </Radio.Group>
           </Form.Item>
+
           <Form.Item label="年龄" name="age">
             <InputNumber min={1} max={100} />
           </Form.Item>
@@ -220,11 +230,12 @@ export default (props) => {
             <Upload
               name="avatar"
               listType="picture-card"
-              className="avatar-uploader"
+              className={styles['avatar-uploader']}
               showUploadList={false}
               action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
               beforeUpload={beforeUpload}
-              onChange={handleChange}
+              onChange={handleChangeUpload}
+              multiple={false}
             >
               {imageUrl ? (
                 <img src={imageUrl} alt="avatar" style={{ width: '100%' }} />
