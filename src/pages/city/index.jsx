@@ -84,7 +84,7 @@ export default function CityManage() {
   // const [, forceUpdate] = useState()
 
   const [openList, setOpenList] = useState([])
-  const [listTotal, setLIstTotal] = useState([])
+  const [listTotal, setListTotal] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [openCityVisiable, setOpenCityVisiable] = useState(false)
@@ -102,7 +102,7 @@ export default function CityManage() {
       const res = await cityApi.getOpenCityList(params)
       console.log(res)
       setOpenList(res.list)
-      setLIstTotal(res.total)
+      setListTotal(res.total)
       setCurrentPage(res.setCurrentPage)
       setPageSize(res.setPageSize)
     } catch (error) {
@@ -112,10 +112,16 @@ export default function CityManage() {
   const handleClickOpenCity = () => {
     setOpenCityVisiable(true)
   }
-  // modal提交
-  const handleOpenCitySubmit = (fileList) => {
-    console.log(fileList)
-    setOpenCityVisiable(true)
+  // 城市开通api
+  const handleOpenCitySubmit = async (fileList) => {
+    try {
+      await cityApi.openCity(fileList)
+      setOpenCityVisiable(false)
+      getOpenCityList()
+      Modal.success({ content: '开通成功！' })
+    } catch (error) {
+      console.log(error)
+    }
   }
   // 查询
   const handleSearchSubmit = (fileList) => {

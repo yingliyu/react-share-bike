@@ -28,7 +28,6 @@ instance.interceptors.request.use(
       reqList.push(request)
     }
     showLoading()
-    closeLoading()
     // Do something before request is sent
     // Loading 为单例模式
     // Loading.service({
