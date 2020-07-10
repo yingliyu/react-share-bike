@@ -122,7 +122,7 @@ export default function OrderManage(props) {
         selectedRowKeys: selectedRowKeys,
         selectedItems: selectedRows
       })
-      setOrderId(selectedRows.orderId)
+      setOrderId(selectedRows[0].orderId)
     }
   }
   // 表格的行事件
