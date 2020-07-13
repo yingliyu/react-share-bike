@@ -25,6 +25,9 @@ const CityManage = loadable((props) => import(`@/pages/city`), {
 const OrderManage = loadable((props) => import(`@/pages/order`), {
   fallback: <div>加载中...</div>
 })
+const EmployeeManage = loadable((props) => import(`@/pages/employee`), {
+  fallback: <div>加载中...</div>
+})
 const routerMain = [
   {
     name: '首页',
@@ -162,7 +165,7 @@ const routerMain = [
   {
     name: '员工管理',
     path: '/admin/user',
-    component: null,
+    component: EmployeeManage,
     icon: '',
     exact: true
   },

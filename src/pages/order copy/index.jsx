@@ -3,7 +3,7 @@ import styles from './index.module.less'
 import { Card, Form, Select, Button, Table, Modal, DatePicker, Space, message } from 'antd'
 // import { Card, Button, Table, Modal, Space, message } from 'antd'
 import { orderApi } from '@/services'
-import QueryForm from '@/components/query-form'
+import BaseForm from '@/components/query-form'
 export default function OrderManage(props) {
   const [form] = Form.useForm()
   const columns = [
@@ -248,7 +248,7 @@ export default function OrderManage(props) {
         </Form>
       </Card>
       <Card title="封装表单组件">
-        <QueryForm
+        <BaseForm
           submitHandle={handleSearchSubmit}
           formList={formList}
           initialValues={searchFormDefaultValues}

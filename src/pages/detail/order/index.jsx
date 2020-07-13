@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Divider } from 'antd'
+import { Card, Divider, message } from 'antd'
 import { orderApi } from '@/services'
 import styles from './index.module.less'
 import positionData from './imgs/orderMap.js'
@@ -28,57 +28,88 @@ export default function OrderDetail(props) {
     try {
       const res = await orderApi.getOrderDetail({ id: id })
       setData(res)
-    } catch (error) {}
+    } catch (error) {
+      message.error(error)
+    }
   }
   const renderMap = () => {
-    let map = new window.BMapGL.Map('orderDetailMap', { enableMapClick: false })
     // 创建地图实例
-    let point = new window.BMapGL.Point(116.404, 39.915)
-    // 创建点坐标
-    map.centerAndZoom(point, 15)
+    let map = new window.BMapGL.Map('orderDetailMap', { enableMapClick: false })
     // 初始化地图，设置中心点坐标和地图级别
-    // 添加地图控件
-    let scaleCtrl = new window.BMapGL.ScaleControl({ anchor: window.BMAP_ANCHOR_TOP_RIGHT }) // 添加比例尺控件
-    map.addControl(scaleCtrl)
-    let zoomCtrl = new window.BMapGL.ZoomControl({ anchor: window.BMAP_ANCHOR_TOP_RIGHT }) // 添加比例尺控件
-    map.addControl(zoomCtrl)
+    map.centerAndZoom(new window.BMapGL.Point(116.404, 39.915), 10)
+    // let startPoint = new window.BMapGL.Point(116.399, 39.915)
+    addMapContrl(map)
     drawBikeRoute(map, data.positionList)
+    drawServieArea(map, data.positionList)
   }
+  // 添加地图控件
+  const addMapContrl = (map) => {
+    map.enableScrollWheelZoom(true) // 开启鼠标滚轮缩放
+    let scaleCtrl = new window.BMapGL.ScaleControl({ anchor: window.BMAP_ANCHOR_BOTTOM_LEFT }) // 添加比例尺控件
+    map.addControl(scaleCtrl)
+    let zoomCtrl = new window.BMapGL.ZoomControl({ anchor: window.BMAP_ANCHOR_TOP_RIGHT }) // 添加缩放控件
+    map.addControl(zoomCtrl)
+  }
+  // 添加行车路线
   const drawBikeRoute = (map, positionList) => {
-    console.log(positionList)
     if (positionList.length) {
-      // const point1 = positionList[0]
-      // const point2 = positionList[1]
-      const startPoint = new window.BMapGL.Point(116.301934, 39.977552)
-      const endPoint = new window.BMapGL.Point(116.508328, 39.919141)
-      console.log(endPoint)
-      const startIcon = new window.BMapGL.Icon('./imgs/start.png', new window.BMapGL.Size(36, 42), {
-        imageSize: new window.BMapGL.Size(36, 42),
-        anchor: new window.BMapGL.Size(36, 42)
-      })
+      let startPoint = new window.BMapGL.Point(116.310791, 40.003419)
+
+      let startIcon = new window.BMapGL.Icon(
+        require('./imgs/start_point.png'),
+        new window.BMapGL.Size(36, 42),
+        {
+          imageSize: new window.BMapGL.Size(36, 42),
+          anchor: new window.BMapGL.Size(36, 42)
+        }
+      )
+      // 创建标注对象并添加到地图
       let startMarker = new window.BMapGL.Marker(startPoint, { icon: startIcon })
       map.addOverlay(startMarker)
-      const endIcon = new window.BMapGL.Icon('./imgs/end.png', new window.BMapGL.Size(36, 42), {
-        imageSize: new window.BMapGL.Size(36, 42),
-        anchor: new window.BMapGL.Size(36, 42)
-      })
-      let endMarker = new window.BMapGL.Marker(startPoint, { icon: endIcon })
+      // let endPoint = new window.BMapGL.Point(116.425, 39.9)
+      let endPoint = new window.BMapGL.Point(116.486419, 39.877282)
+      let endIcon = new window.BMapGL.Icon(
+        require('./imgs/end_point.png'),
+        new window.BMapGL.Size(36, 42),
+        {
+          imageSize: new window.BMapGL.Size(36, 42),
+          anchor: new window.BMapGL.Size(36, 42)
+        }
+      )
+      // 创建标注对象并添加到地图
+      let endMarker = new window.BMapGL.Marker(endPoint, { icon: endIcon })
       map.addOverlay(endMarker)
-      // 连接线路图
-      let trackPoint = []
-      for (let i = 0; i < positionList.length; i++) {
-        let point = positionList[i]
-        trackPoint.push(new window.BMapGL.Point(point.lon, point.lat))
-      }
-      let polyline = new window.BMapGL.Polyline(trackPoint, {
-        strokeColor: 'red',
-        strokeWeight: 3,
-        strokeOpacity: 1
-      })
-      map.addOverlay(polyline)
-      console.log(trackPoint)
-      // map.centerAndZoom(trackPoint, 11)
+
+      let polyline1 = new window.BMapGL.Polyline(
+        [
+          // new window.BMapGL.Point(116.399, 39.915),
+          new window.BMapGL.Point(116.310791, 40.003419),
+          // new window.BMapGL.Point(116.399, 39.915),
+          new window.BMapGL.Point(116.425, 39.9),
+          new window.BMapGL.Point(116.486419, 39.877282)
+        ],
+        { strokeColor: 'red', strokeWeight: 3, strokeOpacity: 0.9 }
+      )
+      map.addOverlay(polyline1)
     }
+  }
+  // 绘制服务区
+  const drawServieArea = (map, positionList) => {
+    // 连接线路图
+    let trackPoint = []
+    for (let i = 0; i < positionList.length; i++) {
+      let point = positionList[i]
+      trackPoint.push(new window.BMapGL.Point(point.lon, point.lat))
+    }
+    let polyline = new window.BMapGL.Polyline(trackPoint, {
+      strokeColor: '#ce0000',
+      strokeWeight: 4,
+      strokeOpacity: 1,
+      fillColor: '#ce0000',
+      fillOpacity: 0.5
+    })
+    map.addOverlay(polyline)
+    console.log(trackPoint)
   }
   return (
     <div className={styles['order-detail-wrapper']}>
