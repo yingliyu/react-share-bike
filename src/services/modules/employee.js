@@ -5,9 +5,9 @@ import { AppGet } from '@/utils/request'
 export function getEmployeeList(params) {
   return AppGet('/shareBike/employee/list', params)
 }
-export function getOrderDetail(params) {
-  return AppGet('/shareBike/order/detail', params)
+export function getEmployeeDetail(params) {
+  return AppGet('/shareBike/employee/detail', params)
 }
-export function endOrder(params) {
-  return AppGet('/shareBike/order/end', params)
+export function deleteEmployee(params) {
+  return AppGet('/shareBike/employee/delete', params)
 }

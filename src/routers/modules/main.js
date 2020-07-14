@@ -28,6 +28,21 @@ const OrderManage = loadable((props) => import(`@/pages/order`), {
 const EmployeeManage = loadable((props) => import(`@/pages/employee`), {
   fallback: <div>加载中...</div>
 })
+const MapPage = loadable((props) => import(`@/pages/map`), {
+  fallback: <div>加载中...</div>
+})
+const BarPage = loadable((props) => import(`@/pages/echarts/bar`), {
+  fallback: <div>加载中...</div>
+})
+const LinePage = loadable((props) => import(`@/pages/echarts/line`), {
+  fallback: <div>加载中...</div>
+})
+const PiePage = loadable((props) => import(`@/pages/echarts/pie`), {
+  fallback: <div>加载中...</div>
+})
+const AreaPage = loadable((props) => import(`@/pages/rich-text`), {
+  fallback: <div>加载中...</div>
+})
 const routerMain = [
   {
     name: '首页',
@@ -144,7 +159,7 @@ const routerMain = [
   {
     name: '富文本',
     path: '/admin/textarea',
-    component: null,
+    component: AreaPage,
     icon: '',
     exact: true
   },
@@ -171,8 +186,8 @@ const routerMain = [
   },
   {
     name: '车辆地图',
-    path: '/admin/bikeMap',
-    component: null,
+    path: '/admin/map',
+    component: MapPage,
     icon: '',
     exact: true
   },
@@ -186,21 +201,21 @@ const routerMain = [
       {
         name: '柱形图',
         path: '/admin/charts/bar',
-        component: null,
+        component: BarPage,
         icon: '',
         exact: true
       },
       {
         name: '饼图',
         path: '/admin/charts/pie',
-        component: null,
+        component: PiePage,
         icon: '',
         exact: true
       },
       {
         name: '折线图',
         path: '/admin/charts/line',
-        component: null,
+        component: LinePage,
         icon: '',
         exact: true
       }

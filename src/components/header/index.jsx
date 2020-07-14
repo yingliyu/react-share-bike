@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Row, Col } from 'antd'
+import { Link } from 'react-router-dom'
 import styles from './index.module.less'
 import axios from '@/utils/http'
 import logo from './imgs/logo.png'
@@ -33,7 +34,9 @@ export default function Header(props) {
       <Row className={[styles['header-top'], styles[menuType === 'second' ? 'simple-header' : '']]}>
         {menuType === 'second' ? (
           <Col span={6} className={styles['logo-wrapper']}>
-            <img src={logo} />
+            <Link to="/admin/dashboard">
+              <img src={logo} />
+            </Link>
           </Col>
         ) : (
           ''

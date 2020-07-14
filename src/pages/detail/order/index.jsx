@@ -3,9 +3,9 @@ import { Card, Divider, message } from 'antd'
 import { orderApi } from '@/services'
 import styles from './index.module.less'
 import positionData from './imgs/orderMap.js'
-const positionList = positionData.result.service_list
 export default function OrderDetail(props) {
-  // const [orderMap, setMap] = useState(null)
+  const positionList = positionData.result.service_list
+
   const [id, setId] = useState('')
   const [data, setData] = useState({
     useBikeMode: '',

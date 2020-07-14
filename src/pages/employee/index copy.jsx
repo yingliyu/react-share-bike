@@ -1,19 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {
-  Card,
-  Table,
-  message,
-  Space,
-  Button,
-  Modal,
-  Form,
-  Input,
-  Radio,
-  Select,
-  DatePicker
-} from 'antd'
-import moment from 'moment'
-import { PlusOutlined } from '@ant-design/icons'
+import { Card, Table, message, Space, Button } from 'antd'
 import QueryForm from '@/components/query-form'
 import { employeeApi } from '@/services'
 import styles from './index.module.less'
@@ -23,21 +9,6 @@ export default function CityManage() {
   const [total, setTotal] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
-  const [addModalVisible, setAddModalVisible] = useState(false)
-  const [id, setId] = useState()
-  const [operateType, setOperateType] = useState('create')
-  const [selectedParams, setSelectedParams] = useState({
-    selectedRowKeys: '',
-    selectedItems: []
-  })
-  const [form] = Form.useForm()
-  const initialValues = {
-    userName: '',
-    sex: '',
-    status: '',
-    birthday: '',
-    address: ''
-  }
   // const [orderId, setOrderId] = useState()
   useEffect(() => {
     initData()
@@ -49,14 +20,6 @@ export default function CityManage() {
       setTotal(res.total)
     } catch (error) {
       message.error(error)
-    }
-  }
-  const formItemlayout = {
-    labelCol: {
-      span: 6
-    },
-    wrapperCol: {
-      span: 12
     }
   }
   // const getData = async (params) => {
@@ -145,49 +108,11 @@ export default function CityManage() {
       }
     }
   ]
-  const addEmployeeHandle = () => {
-    console.log('创建员工')
-    setAddModalVisible(true)
-  }
-
   const editHandle = (rows) => {
     console.log('编辑===', rows)
-    setOperateType('edit')
-    setAddModalVisible(true)
-    employeeDetail()
-  }
-  const employeeDetail = async () => {
-    try {
-      const res = await employeeApi.getEmployeeDetail({ id: id })
-      console.log(res)
-      form.setFieldsValue({
-        ...res,
-        birthday: moment('1972-05-03'),
-        sex: res.sex.toString()
-      })
-    } catch (error) {
-      console.log(error)
-    }
   }
   const deleteHandle = (rows) => {
     console.log('删除===', rows)
-    Modal.confirm({
-      title: '删除员工提示',
-      content: '确认删除吗？',
-      async onOk() {
-        console.log('ok')
-        try {
-          const res = await employeeApi.deleteEmployee({ id: id })
-          console.log(res)
-          initData()
-        } catch (error) {
-          console.log(error)
-        }
-      },
-      onCancel() {
-        console.log('Cancel')
-      }
-    })
   }
   const changePageHandle = (current) => {
     setCurrentPage(current)
@@ -235,47 +160,8 @@ export default function CityManage() {
     initData(params)
     // getData(params)
   }
-
-  const okHandle = async () => {
-    try {
-      console.log(operateType)
-      const values = await form.validateFields()
-      console.log('Success:', values)
-      initData()
-      form.setFieldsValue({
-        userName: '',
-        sex: '',
-        status: '',
-        birthday: '',
-        addresss: ''
-      })
-      setAddModalVisible(false)
-    } catch (errorInfo) {
-      console.log('Failed:', errorInfo)
-    }
-  }
-
-  const onCancel = () => {
-    form.setFieldsValue({
-      userName: '',
-      sex: '',
-      status: '',
-      birthday: '',
-      address: ''
-    })
-    setAddModalVisible(false)
-  }
-  const rowSelections = {
-    type: 'Radio',
-    selectedRowKeys: selectedParams.selectedRowKeys,
-    onChange: (selectedRowKeys, selectedRows) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-      setId(selectedRows[0].id)
-      setSelectedParams({
-        selectedRowKeys: selectedRowKeys,
-        selectedItems: selectedRows
-      })
-    }
+  const addEmployeeHandle = () => {
+    console.log('创建员工')
   }
   return (
     <div className={styles['user-manage-wrapper']}>
@@ -294,18 +180,16 @@ export default function CityManage() {
         <div className={styles['btn-order-wrapper']}>
           <Space>
             <Button type="primary" onClick={addEmployeeHandle}>
-              <PlusOutlined />
               创建员工
-            </Button>
-            <Button type="primary" onClick={addEmployeeHandle}>
-              员工详情
             </Button>
           </Space>
         </div>
         <br />
         <Table
           bordered
-          rowSelection={rowSelections}
+          rowSelection={{
+            type: 'radio'
+          }}
           dataSource={list}
           columns={columns}
           pagination={{
@@ -318,54 +202,6 @@ export default function CityManage() {
           }}
         />
       </Card>
-
-      <Modal
-        title={operateType === 'create' ? '创建员工' : '编辑员工信息'}
-        visible={addModalVisible}
-        onOk={okHandle}
-        onCancel={onCancel}
-      >
-        <Form initialValues={initialValues} form={form} {...formItemlayout}>
-          <Form.Item
-            label="姓名"
-            name="userName"
-            rules={[
-              {
-                required: true,
-                message: 'Please input your name'
-              }
-            ]}
-          >
-            <Input placeholder="请输入姓名" />
-          </Form.Item>
-          <Form.Item label="性别" name="sex">
-            <Radio.Group>
-              <Radio value="1" key="1">
-                男
-              </Radio>
-              <Radio value="0" key="0">
-                女
-              </Radio>
-            </Radio.Group>
-          </Form.Item>
-          <Form.Item label="状态" name="status">
-            <Select>
-              <Select.Option value="1" key="1">
-                风华浪子
-              </Select.Option>
-              <Select.Option value="2" key="2">
-                咸鱼一条
-              </Select.Option>
-            </Select>
-          </Form.Item>
-          <Form.Item label="生日" name="birthday">
-            <DatePicker name="birthday" />
-          </Form.Item>
-          <Form.Item label="联系地址" name="address">
-            <Input.TextArea placeholder="请输入联系地址" />
-          </Form.Item>
-        </Form>
-      </Modal>
     </div>
   )
 }
