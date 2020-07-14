@@ -158,7 +158,7 @@ const routerMain = [
   },
   {
     name: '富文本',
-    path: '/admin/textarea',
+    path: '/admin/richtext',
     component: AreaPage,
     icon: '',
     exact: true
