@@ -12,12 +12,12 @@ export default function NavLeft(props) {
     return data.map((item) => {
       if (item.children) {
         return (
-          <SubMenu title={item.name} key={item.path}>
+          <SubMenu title={item.title} key={item.path}>
             {renderMenu(item.children)}
           </SubMenu>
         )
       }
-      return <Menu.Item key={item.path}>{item.name}</Menu.Item>
+      return <Menu.Item key={item.path}>{item.title}</Menu.Item>
     })
   }
   const menuTreeNode = renderMenu(RouterMain)
