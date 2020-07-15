@@ -43,6 +43,9 @@ const PiePage = loadable((props) => import(`@/pages/echarts/pie`), {
 const AreaPage = loadable((props) => import(`@/pages/rich-text`), {
   fallback: <div>加载中...</div>
 })
+const RichText = loadable((props) => import(`@/pages/rich-text/index-draft.jsx`), {
+  fallback: <div>加载中...</div>
+})
 const routerMain = [
   {
     name: '首页',
@@ -159,9 +162,23 @@ const routerMain = [
   {
     name: '富文本',
     path: '/admin/richtext',
-    component: AreaPage,
     icon: '',
-    exact: true
+    children: [
+      {
+        name: '方案一',
+        path: '/admin/richtext/braft-editor',
+        component: AreaPage,
+        icon: '',
+        exact: true
+      },
+      {
+        name: '方案二',
+        path: '/admin/richtext/draft-wysiwyg',
+        component: RichText,
+        icon: '',
+        exact: true
+      }
+    ]
   },
   {
     name: '城市管理',
