@@ -1,12 +1,16 @@
-import React from 'react'
-// import MenuList from '../../config/menuConf.js'
+import React, { useState } from 'react'
 import { RouterMain } from '@/routers'
 import logo from './imgs/logo.png'
 import { Menu } from 'antd'
-const { SubMenu } = Menu
 import styles from './index.module.less'
+import { connect } from 'react-redux'
+import { appActionCreators } from '@/store/action-creators'
+import Cookie from 'js-cookie'
+const { SubMenu } = Menu
 
-export default function NavLeft(props) {
+function NavLeft(props) {
+  const [selectMenu, setSelectMenu] = useState([props.location.pathname])
+  const { switchMenu } = props
   // 菜单渲染-递归
   const renderMenu = (data) => {
     return data.map((item) => {
@@ -17,14 +21,21 @@ export default function NavLeft(props) {
           </SubMenu>
         )
       }
-      return <Menu.Item key={item.path}>{item.title}</Menu.Item>
+      return (
+        <Menu.Item title={item.title} key={item.path}>
+          {item.title}
+        </Menu.Item>
+      )
     })
   }
   const menuTreeNode = renderMenu(RouterMain)
-  const handleClick = (e) => {
+  const handleClick = (item) => {
     props.history.push({
-      pathname: e.key
+      pathname: item.key
     })
+    setSelectMenu(item.keyPath)
+    switchMenu(item.item.props.title)
+    Cookie.set('CURRENT_MENU', item.item.props.title)
   }
   const toDashboard = () => {
     props.history.push('/admin/dashboard')
@@ -35,9 +46,21 @@ export default function NavLeft(props) {
       <div className={styles['logo']} onClick={toDashboard}>
         <img src={logo} />
       </div>
-      <Menu onClick={handleClick} theme="dark" className={styles['menu-wrapper']}>
+      <Menu
+        onClick={handleClick}
+        theme="dark"
+        className={styles['menu-wrapper']}
+        selectedKeys={selectMenu}
+      >
         {menuTreeNode ? menuTreeNode : null}
       </Menu>
     </div>
   )
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    switchMenu: (val) => dispatch(appActionCreators.switchMenu(val))
+  }
+}
+export default connect(null, mapDispatchToProps)(NavLeft)

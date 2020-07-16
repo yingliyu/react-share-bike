@@ -3,6 +3,9 @@ import { Row, Col } from 'antd'
 import styles from './index.module.less'
 import loadable from '@loadable/component'
 const AsyncPage = loadable((props) => import(`@/components/${props.page}`))
+// const Header = loadable((props) => import(`@/components/header`), {
+//   fallback: <div>加载中...</div>
+// })
 export default function App(props) {
   return (
     <Row className={styles['admin-wrapper']}>
@@ -12,7 +15,7 @@ export default function App(props) {
       </Col>
       <Col span={21} className={styles['main']}>
         {/* 头部 */}
-        <AsyncPage page="header" fallback={<div>Loading...</div>} />
+        <AsyncPage {...props} page="header" fallback={<div>Loading...</div>} />
         {/* main */}
         <Row className={styles['content']}>{props.children}</Row>
         {/* 底部 */}
