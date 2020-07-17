@@ -20,11 +20,8 @@ import {
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
 import moment from 'moment'
 export default (props) => {
-  // console.log(moment().get('year')) // 年
   const { Option } = Select
   const { TextArea } = Input
-  // const RadioGroup = Radio.Group
-
   const layout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 18 }

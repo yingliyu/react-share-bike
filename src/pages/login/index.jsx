@@ -4,8 +4,6 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import styles from './index.module.less'
 
 export default (props) => {
-  console.log(props)
-
   const layout = {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 }
@@ -21,7 +19,7 @@ export default (props) => {
   }
 
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
+    message.error('Failed:', errorInfo)
   }
   const [form] = Form.useForm()
   const [, forceUpdate] = useState()
