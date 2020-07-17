@@ -38,7 +38,11 @@ function NavLeft(props) {
     Cookie.set('CURRENT_MENU', item.item.props.title)
   }
   const toDashboard = () => {
-    props.history.push('/admin/dashboard')
+    const path = '/admin/dashboard'
+    props.history.push(path)
+    setSelectMenu(path)
+    switchMenu('首页')
+    Cookie.set('CURRENT_MENU', '首页')
   }
 
   return (

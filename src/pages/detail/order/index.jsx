@@ -109,7 +109,6 @@ export default function OrderDetail(props) {
       fillOpacity: 0.5
     })
     map.addOverlay(polyline)
-    console.log(trackPoint)
   }
   return (
     <div className={styles['order-detail-wrapper']}>

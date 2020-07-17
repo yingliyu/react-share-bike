@@ -9,7 +9,7 @@ export default function Base(props) {
   return (
     <div className={styles['base-wrapper']}>
       {/* 头部 */}
-      <Header menuType="second" />
+      <Header menuType="second" {...props} />
       <div className={styles['base-content-wrapper']}>{props.children}</div>
     </div>
   )

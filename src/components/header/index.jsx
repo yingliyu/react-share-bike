@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { Row, Col } from 'antd'
-import { Link } from 'react-router-dom'
 import styles from './index.module.less'
 import Cookie from 'js-cookie'
 import logo from './imgs/logo.png'
 import { connect } from 'react-redux'
+import { appActionCreators } from '@/store/action-creators'
 
 function Header(props) {
-  const { menuType } = props
-  const currentTime = new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString()
+  const getCurrentTime = () => {
+    const time = new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString()
+    return time
+  }
+  const currentTime = getCurrentTime()
   const [time, setTime] = useState(currentTime)
   const [weather, setWeather] = useState('晴转多云')
   useEffect(() => {
-    const timer = setInterval(
-      () => setTime(new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString()),
-      1000
-    )
+    const timer = setInterval(() => setTime(getCurrentTime()), 1000)
     getWeatherAPIData()
     return function cleanup() {
       clearInterval(timer)
@@ -31,15 +31,21 @@ function Header(props) {
     // })
     setWeather()
   }
-  const { menuName } = props
+  const { menuName, switchMenu, menuType } = props
+  const [, setSelectMenu] = useState([props.location.pathname])
+  const handleClickLogo = () => {
+    const path = '/admin/dashboard'
+    props.history.push(path)
+    setSelectMenu(path)
+    switchMenu('首页')
+    Cookie.set('CURRENT_MENU', '首页')
+  }
   return (
     <div className={styles.header}>
       <Row className={[styles['header-top'], styles[menuType === 'second' ? 'simple-header' : '']]}>
         {menuType === 'second' ? (
           <Col span={6} className={styles['logo-wrapper']}>
-            <Link to="/admin/dashboard">
-              <img src={logo} />
-            </Link>
+            <img onClick={handleClickLogo} src={logo} />
           </Col>
         ) : (
           ''
@@ -72,4 +78,10 @@ const mapStateToProps = (state) => {
       : Cookie.get('CURRENT_MENU')
   }
 }
-export default connect(mapStateToProps)(Header)
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    switchMenu: (val) => dispatch(appActionCreators.switchMenu(val))
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Header)
