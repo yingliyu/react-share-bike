@@ -42,6 +42,10 @@ export default function RichText() {
           wrapperClassName="wrapperClassName"
           editorClassName="editorClassName"
           onEditorStateChange={onEditorStateChange}
+          toolbar={{
+            urlEnabled: true,
+            uploadEnabled: true
+          }}
         />
       </Card>
     </div>
