@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { Card, Form, Select, Button, Table, Modal, Space } from 'antd'
 import styles from './index.module.less'
 import { cityApi } from '@/services'
-import { useFetch, usePagination } from '@/hooks'
-// import { useEffect } from 'react'
-
 export default function CityManage() {
   const columns = [
     {
@@ -83,34 +80,35 @@ export default function CityManage() {
     useBikeMode: '',
     operateMode: ''
   }
+  // const [form] = Form.useForm()
+  // const [, forceUpdate] = useState()
 
-  const { data = {}, doFetch } = useFetch(cityApi.getOpenCityList, {
-    current: 1,
-    pageSize: 10
-  })
-  const [pagination, setPagination] = usePagination({
-    total: data.total,
-    onChange: (current, pageSize) => {
-      console.log(current, pageSize)
-
-      doFetch({ current, pageSize })
-      console.log(current, pageSize)
-      setPagination(Object.assign(pagination, { current, pageSize }))
-    }
-  })
-  // 异步
-  useEffect(() => {
-    setPagination(
-      Object.assign(pagination, {
-        total: data.total
-      })
-    )
-  }, [data])
-
-  // console.log(data.total)
-  // console.log(pagination)
+  const [openList, setOpenList] = useState([])
+  const [listTotal, setListTotal] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
   const [openCityVisiable, setOpenCityVisiable] = useState(false)
 
+  // To disable submit button at the beginning.
+  // useEffect(() => {
+  // forceUpdate({})
+  // }, [])
+  useEffect(() => {
+    getOpenCityList()
+  }, [currentPage, pageSize])
+  // 获取开通城市列表
+  const getOpenCityList = async (params) => {
+    try {
+      const res = await cityApi.getOpenCityList(params)
+      // console.log(res)
+      setOpenList(res.list)
+      setListTotal(res.total)
+      setCurrentPage(res.setCurrentPage)
+      setPageSize(res.setPageSize)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   const handleClickOpenCity = () => {
     setOpenCityVisiable(true)
   }
@@ -119,7 +117,7 @@ export default function CityManage() {
     try {
       await cityApi.openCity(fileList)
       setOpenCityVisiable(false)
-      doFetch()
+      getOpenCityList()
       Modal.success({ content: '开通成功！' })
     } catch (error) {
       console.log(error)
@@ -127,14 +125,20 @@ export default function CityManage() {
   }
   // 查询
   const handleSearchSubmit = (fileList) => {
+    console.log(fileList)
     const params = {
-      ...fileList
-      // currentPage,
-      // pageSize
+      ...fileList,
+      currentPage,
+      pageSize
     }
-    doFetch(params)
+    getOpenCityList(params)
   }
-
+  const changePageHandle = (current) => {
+    setCurrentPage(current)
+  }
+  const onShowSizeChangeHandle = (current, size) => {
+    setPageSize(size)
+  }
   return (
     <div className={styles['city-manage-wrapper']}>
       <Card>
@@ -184,8 +188,19 @@ export default function CityManage() {
             开通城市
           </Button>
         </p>
-        {/* table */}
-        <Table bordered dataSource={data.list} columns={columns} pagination={pagination} />
+        <Table
+          bordered
+          dataSource={openList}
+          columns={columns}
+          pagination={{
+            current: currentPage,
+            pageSize: pageSize,
+            total: listTotal,
+            showTotal: (total) => `共 ${total} 条`,
+            onChange: (current) => changePageHandle(current),
+            onShowSizeChange: (current, size) => onShowSizeChangeHandle(current, size)
+          }}
+        />
       </Card>
       <Modal
         title="开通城市"
