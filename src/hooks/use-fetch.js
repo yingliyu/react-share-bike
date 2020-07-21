@@ -1,29 +1,26 @@
 import { useState, useEffect, useCallback } from 'react'
 
-export function useFetch(fetch, params) {
+export function useFetch(options) {
+  console.log(options)
   const [data, setData] = useState()
-  const [newParams, setNewParams] = useState(params)
+  const [newParams, setNewParams] = useState(options.params)
   const fetchApi = useCallback(async () => {
-    const res = await fetch(newParams)
-    // console.log(res)
+    const res = await options.fetch(newParams)
     setData(res)
-  }, [fetch, newParams])
+  }, [options.fetch, newParams])
 
   useEffect(() => {
-    console.log('useEffect')
     fetchApi()
   }, [fetchApi])
 
   const doFetch = useCallback((rest) => {
+    console.log(rest)
     setNewParams(rest)
   }, [])
 
+  // 刷新结果
   const reFetch = () => {
     setNewParams({ ...newParams })
   }
-  return {
-    data,
-    doFetch,
-    reFetch
-  }
+  return { data, doFetch, reFetch }
 }

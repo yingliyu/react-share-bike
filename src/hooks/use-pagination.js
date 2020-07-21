@@ -1,38 +1,31 @@
 import { useState, useMemo } from 'react'
-const defaultPagination = {
-  current: 1,
-  pageSize: 10
-}
+import { DEFAULTPAGINATION as defaultPagination } from '@/utils/constants'
 
 export function usePagination(config = defaultPagination) {
-  const [pagination, setPagination] = useState({
+  const [paginationConf, setPagination] = useState({
     pageSize: config.pageSize || defaultPagination.pageSize,
     current: config.page || config.currentPage || defaultPagination.current
   })
 
-  const paginationConf = useMemo(() => {
+  const pagination = useMemo(() => {
     return {
-      ...defaultPagination,
-      total: pagination.total,
+      ...config,
+      total: paginationConf.total,
       showTotal: (total) => `共 ${total} 条`,
       onChange: (current, pageSize) => {
         if (config.onChange) {
           config.onChange(current, pageSize)
         }
-        // console.log(current, pageSize)
-
-        // setPagination(Object.assign(pagination, { current, pageSize }))
-
-        // console.log(pagination)
+        setPagination({ current, pageSize })
       },
       onShowSizeChange: (current, pageSize) => {
         if (config.onChange) {
           config.onChange(current, pageSize)
         }
-        setPagination(Object.assign(pagination, { current, pageSize }))
+        setPagination({ current, pageSize })
       }
     }
-  }, [config, pagination])
+  }, [config, paginationConf])
 
-  return [paginationConf, setPagination]
+  return [pagination, setPagination]
 }

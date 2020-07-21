@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { Card, Form, Select, Button, Table, Modal, Space } from 'antd'
 import styles from './index.module.less'
 import { cityApi } from '@/services'
+import {
+  FORMITEMLAYOUT as formItemLayout,
+  BTNWRAPPERLAYOUT as btnWrapperLayout
+} from '@/utils/constants'
 export default function CityManage() {
   const columns = [
     {
@@ -59,16 +63,7 @@ export default function CityManage() {
       key: 'operator'
     }
   ]
-  const formItemLayout = {
-    labelCol: { span: 8 },
-    wrapperCol: { span: 10 }
-  }
-  const btnWrapperLayout = {
-    wrapperCol: {
-      span: 16,
-      offset: 8
-    }
-  }
+
   const searchFormValues = {
     cityName: '',
     useBikeMode: '',
@@ -80,8 +75,6 @@ export default function CityManage() {
     useBikeMode: '',
     operateMode: ''
   }
-  // const [form] = Form.useForm()
-  // const [, forceUpdate] = useState()
 
   const [openList, setOpenList] = useState([])
   const [listTotal, setListTotal] = useState([])
@@ -89,10 +82,6 @@ export default function CityManage() {
   const [pageSize, setPageSize] = useState(10)
   const [openCityVisiable, setOpenCityVisiable] = useState(false)
 
-  // To disable submit button at the beginning.
-  // useEffect(() => {
-  // forceUpdate({})
-  // }, [])
   useEffect(() => {
     getOpenCityList()
   }, [currentPage, pageSize])

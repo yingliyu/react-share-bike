@@ -1,14 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Card, Form, Select, Button, Table, Modal, Space } from 'antd'
 import styles from './index.module.less'
 import { cityApi } from '@/services'
-import { useTable } from '@/hooks'
+import { useFetch, usePagination } from '@/hooks'
 import {
   FORMITEMLAYOUT as formItemLayout,
   BTNWRAPPERLAYOUT as btnWrapperLayout,
   DEFAULTPAGINATION as defaultPagination
 } from '@/utils/constants'
-// 城市管理
 export default function CityManage() {
   const columns = [
     {
@@ -66,7 +65,6 @@ export default function CityManage() {
       key: 'operator'
     }
   ]
-
   const searchFormValues = {
     cityName: '',
     useBikeMode: '',
@@ -79,20 +77,28 @@ export default function CityManage() {
     operateMode: ''
   }
 
-  const [openCityVisiable, setOpenCityVisiable] = useState(false)
-
-  const { tableProps, doFetch, reFetch } = useTable({
+  const { data = {}, doFetch } = useFetch({
     fetch: cityApi.getOpenCityList,
-    params: null,
-    pagination: {
-      onChange: (current, pageSize) => {
-        doFetch({ current, pageSize })
-      }
+    params: {
+      current: 1,
+      pageSize: 10
     }
-    // onChange: (pagination, filters, sorts) => {
-    //   console.log('onChange==', pagination, filters, sorts)
-    // }
   })
+
+  const [pagination, setPagination] = usePagination({
+    total: data.total,
+    onChange: (current, pageSize) => {
+      doFetch({ current, pageSize })
+    }
+  })
+
+  useEffect(() => {
+    setPagination({
+      total: data.total
+    })
+  }, [data])
+
+  const [openCityVisiable, setOpenCityVisiable] = useState(false)
 
   const handleClickOpenCity = () => {
     setOpenCityVisiable(true)
@@ -108,9 +114,8 @@ export default function CityManage() {
       console.log(error)
     }
   }
-  // 查询 使用分页默认参数
+  // 查询
   const handleSearchSubmit = (fileList) => {
-    console.log(fileList)
     const params = {
       ...fileList,
       ...defaultPagination
@@ -162,21 +167,13 @@ export default function CityManage() {
         </Form>
       </Card>
       <Card>
-        <section>
-          <Space>
-            <Button type="primary" onClick={handleClickOpenCity}>
-              开通城市
-            </Button>
-            <Button type="primary" onClick={reFetch}>
-              reFetch
-            </Button>
-            {/* <Button type="primary" onClick={doFetch}>
-              doFetch
-            </Button> */}
-          </Space>
-        </section>
-        <br />
-        <Table bordered columns={columns} {...tableProps} />
+        <p>
+          <Button type="primary" onClick={handleClickOpenCity}>
+            开通城市
+          </Button>
+        </p>
+        {/* table */}
+        <Table bordered dataSource={data.list} columns={columns} pagination={pagination} />
       </Card>
       <Modal
         title="开通城市"

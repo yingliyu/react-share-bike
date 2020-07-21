@@ -1,29 +1,56 @@
-import { useState, useEffect, useCallback } from 'react'
-export function useTable(fetch, params) {
-  const [data, setData] = useState()
-  const [newParams, setNewParams] = useState(params)
-  const fetchApi = useCallback(async () => {
-    const res = await fetch(newParams)
-    if (res.code === 1) {
-      setData(res.data)
+import { useEffect } from 'react'
+import { useFetch, usePagination } from '@/hooks'
+import { DEFAULTPAGINATION as defaultPagination } from '@/utils/constants'
+
+export function useTable(options) {
+  const { data = {}, doFetch, reFetch } = useFetch({
+    fetch: options.fetch,
+    params: {
+      ...options.params,
+      ...defaultPagination
     }
-  }, [fetch, newParams])
+  })
+  const tableProps = {
+    dataSource: data.list
+  }
+
+  const [pagination, setPagination] = usePagination({
+    total: data.total,
+    onChange: (current, pageSize) => {
+      if (!options.onChange) {
+        if (options.pagination && options.pagination.onChange) {
+          options.pagination.onChange(current, pageSize)
+        }
+      } else {
+        doFetch({ current, pageSize })
+      }
+    }
+  })
 
   useEffect(() => {
-    console.log('useEffect')
-    fetchApi()
-  }, [fetchApi])
+    setPagination({
+      total: data.total
+    })
+  }, [data])
 
-  const doFetch = useCallback((rest) => {
-    setNewParams(rest)
-  }, [])
+  if (options.pagination) {
+    tableProps.pagination = pagination
+  } else {
+    tableProps.pagination = false
+  }
 
-  const reFetch = () => {
-    setNewParams({ ...newParams })
-  }
-  return {
-    data,
-    doFetch,
-    reFetch
-  }
+  // const doFetch = useCallback(
+  //   (params) => {
+  //     console.log(params)
+  //     doFetch(params)
+  //     if (params.current) {
+  //       setPagination({
+  //         pageSize: pagination.pageSize,
+  //         current: params.current
+  //       })
+  //     }
+  //   },
+  //   [pagination, setPagination, dofetch]
+  // )
+  return { tableProps, doFetch, reFetch }
 }
