@@ -1,5 +1,5 @@
 import React from 'react'
-import MenuList from './../../config/menuConf.js'
+import MenuList from './../../config/menuConf'
 import logo from './imgs/logo.png'
 import { Menu } from 'antd'
 const { SubMenu } = Menu
@@ -32,9 +32,12 @@ export default class NavLeft extends React.Component {
       <div className="nav-left">
         <div className="logo">
           <img src={logo} />
+          <span className="logo-text">
+            上海科技创新资源数据中心
+          </span>
         </div>
         <Menu theme="dark" className="menu-wrapper">
-          {this.state ? this.state.menuTreeNode : null}
+          {this.state && this.state.menuTreeNode ? this.state.menuTreeNode : null}
         </Menu>
       </div>
     )

@@ -1,0 +1,1 @@
+// http://api.map.baidu.com/telematics/v3/weather?location=shanghai&output=JSON&ak={百度AK}
