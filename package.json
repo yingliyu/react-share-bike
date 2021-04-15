@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "name": "train-ticket-pro",
   "token": "_train_ticket_pro_",
@@ -46,3 +47,58 @@
     "react-scripts": "3.3.0"
   }
 }
+=======
+{
+  "name": "react-share-bike",
+  "token": "_react_share_bike_",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "build:qa": "dotenv -e .env.qa react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject",
+    "lint": "eslint --ext .js --ext .jsx src/  --fix",
+    "precommit": "yarn lint"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "@loadable/component": "^5.12.0",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "antd": "^3.26.3",
+    "axios": "^0.19.2",
+    "babel-plugin-import": "^1.13.0",
+    "customize-cra": "^1.0.0-alpha.0",
+    "dotenv-cli": "^3.1.0",
+    "eslint-config-alloy": "^3.4.0",
+    "husky": "^3.1.0",
+    "js-cookie": "^2.2.1",
+    "jsonp": "^0.2.1",
+    "less": "^3.10.3",
+    "less-loader": "^5.0.0",
+    "qs": "^6.9.4",
+    "react": "^16.12.0",
+    "react-app-rewired": "^2.1.5",
+    "react-dom": "^16.12.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.3.0"
+  }
+}
+>>>>>>> 7c6e89294ab71e15bbc7972cae01b8db012af265

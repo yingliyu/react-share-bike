@@ -24,7 +24,7 @@ const menuList = [
         key: '/admin/ui/notification'
       },
       {
-        title:'全局Message',
+        title: '全局Message',
         key: '/admin/ui/message'
       },
       {
@@ -34,6 +34,10 @@ const menuList = [
       {
         title: '图片画廊',
         key: '/admin/ui/gallery'
+      },
+      {
+        title: '轮播图',
+        key: '/admin/ui/callor'
       }
     ]
   },
@@ -52,8 +56,30 @@ const menuList = [
     ]
   },
   {
+    title: '表格',
+    key: '/admin/table',
+    children: [
+      {
+        title: '基础表格',
+        key: '/admin/table/base'
+      },
+      {
+        title: '高级表格',
+        key: '/admin/table/advance'
+      }
+    ]
+  },
+  {
+    title: '富文本',
+    key: '/admin/textarea'
+  },
+  {
     title: '城市管理',
     key: '/admin/city'
+  },
+  {
+    title: '订单管理',
+    key: '/admin/order'
   },
   {
     title: '员工管理',
